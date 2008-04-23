@@ -245,7 +245,7 @@ module Merb
         request = fake_request(env)
 
         opts = check_request_for_route(request) # Check that the request will be routed correctly
-        controller_name = (opts[:namespace] ? opts[:namespace] + '/' : '') + opts.delete[:controller]
+        controller_name = (opts[:namespace] ? opts[:namespace] + '/' : '') + opts.delete(:controller)
         klass = Object.full_const_get(controller_name.to_const_string)
         action = opts.delete(:action).to_s
         params.merge!(opts)

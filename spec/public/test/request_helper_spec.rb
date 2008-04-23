@@ -160,6 +160,22 @@ describe Merb::Test::RequestHelper do
       controller.params[:id].should   == "my_id"
     end
   end
+  
+  describe "#request" do
+    before(:each) do
+      Merb::Router.prepare do |r|      
+        r.namespace :admin do |admin|
+          admin.resources :request_controller
+        end
+      end
+    end
+    
+    it "should get to the new action with namespace" do
+      Merb::Test::ControllerAssertionMock.should_receive(:called).with(:new)
+      controller = request("/admin/request_controller/new")
+      controller.params[:namespace].should == "admin"
+    end
+  end
 end
 
 module Merb::Test::RequestHelper
